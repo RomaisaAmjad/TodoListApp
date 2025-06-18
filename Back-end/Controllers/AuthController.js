@@ -2,7 +2,7 @@ const { User, Task } = require('../models/index.js');
 const{asyncWrapper} = require('../Middlewares/AsyncWrapper');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { use } = require('../routes/user.js');
+
 
 exports.signUp = asyncWrapper(async function(req,res){
     const{username,email,password}=req.body;
@@ -13,6 +13,7 @@ exports.signUp = asyncWrapper(async function(req,res){
         email,
         password:hashedPassword
     })
+    console.log(req.body);
     res.status(201).send(user);
 })
 

@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { validateTask } = require('../Middlewares/validateTask');
+const validateTask = require('../Middlewares/validateTask');
 const { authenticateUser } = require('../Middlewares/authMiddleware');
 const controller = require('../Controllers/TodoTask');
 

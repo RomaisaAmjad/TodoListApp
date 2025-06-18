@@ -40,7 +40,7 @@ Object.keys(db).forEach(modelName => {
 sequelize.authenticate().then(()=>{
   console.log("Connection is Established!");
 }).catch((err)=>{
-  console.log("Connection is Failed!");
+  console.log("Connection is Failed!",err);
 })
 
 

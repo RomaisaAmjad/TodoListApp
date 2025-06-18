@@ -1,135 +1,93 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import EditTask from '../components/EditTask.jsx';
-import API from '../api/axios.js';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import EditTask from "../components/EditTask.jsx";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+
+import {
+  fetchTasksFromAPI,
+  createTask,
+  deleteTaskById,
+  updateTaskById,
+} from "../Functions/taskHandling.js";
+
+// Safe function to parse stored user from localStorage
+function getStoredUser() {
+  const userData = localStorage.getItem("user");
+  if (!userData || userData === "undefined") return null;
+
+  try {
+    return JSON.parse(userData);
+  } catch (err) {
+    console.error("Failed to parse user from localStorage:", err);
+    return null;
+  }
+}
 
 function Tasks() {
-  const location = useLocation();
   const navigate = useNavigate();
 
-  const user =
-    location.state?.user || JSON.parse(localStorage.getItem('user')) || null;
-
+  const [user, setUser] = useState(null);
   const [tasks, setTasks] = useState([]);
-  const [editingTask, setEditingTask] = useState(null); 
-  const [taskData, setTaskData] = useState({
-    title: '',
-    description: '',
-    isCompleted: false,
-  });
+  const [editingTask, setEditingTask] = useState(null);
+  const [checkingAuth, setCheckingAuth] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!user || !token) {
-      alert('Please log in first');
-      navigate('/login');
+    const token = localStorage.getItem("token");
+    const storedUser = getStoredUser();
+
+    if (!token || !storedUser) {
+      alert("Please log in first");
+      navigate("/login");
+    } else {
+      setUser(storedUser);
     }
-  }, [user, navigate]);
+
+    setCheckingAuth(false);
+  }, [navigate]);
 
   useEffect(() => {
-    const fetchTasks = async () => {
-      const token = localStorage.getItem('token');
-      try {
-        const response = await API.get('/tasks', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setTasks(response.data);
-      } catch (error) {
-        console.error('Failed', error);
-      }
-    };
-
-    if (user) fetchTasks();
+    if (user) fetchTasksFromAPI(setTasks);
   }, [user]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setTaskData((prev) => ({
-      ...prev,
-      [name]: name === 'isCompleted' ? value === 'true' : value,
-    }));
-  };
+  const taskSchema = Yup.object().shape({
+    title: Yup.string().min(3).max(100).required("Title is required"),
+    description: Yup.string().min(5).required("Description is required"),
+    isCompleted: Yup.boolean(),
+  });
 
-  const handleCreate = async (e) => {
-    e.preventDefault();
-
-    if (!taskData.title || !taskData.description) {
-      alert('Please fill out all fields.');
-      return;
-    }
-
-    const token = localStorage.getItem('token');
-    if (!token) {
-      alert('You are not logged in!');
-      return;
-    }
-
-    try {
-      const response = await API.post('/tasks', taskData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      setTasks((prev) => [...prev, response.data]);
-    } catch (error) {
-      console.log(error);
-      alert('Incomplete Data!');
-    }
-  };
-
-  const handleDelete = async (id) => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      alert('You are not logged in!');
-      return;
-    }
-
-    try {
-      await API.delete(`/tasks/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      setTasks((prev) => prev.filter((task) => task.id !== id));
-    } catch (error) {
-      console.error(error);
-      alert('Failed to delete');
-    }
-  };
+  if (checkingAuth) return <div className="text-center">Loading...</div>;
 
   return (
     <div className="text-center">
-      <h1 className="text-xl font-bold">Hello {user?.username || 'User'}</h1>
+      <h1 className="text-xl font-bold">Hello {user?.username || "User"}</h1>
 
-      <form onSubmit={handleCreate}>
-        <input
-          type="text"
-          name="title"
-          placeholder="Title"
-          value={taskData.title}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="description"
-          placeholder="Description"
-          value={taskData.description}
-          onChange={handleChange}
-        />
-        <select
-          name="isCompleted"
-          value={taskData.isCompleted}
-          onChange={handleChange}
-        >
-          <option value={false}>false</option>
-          <option value={true}>true</option>
-        </select>
-        <button type="submit">Submit</button>
-      </form>
+      <Formik
+        initialValues={{ title: "", description: "", isCompleted: false }}
+        validationSchema={taskSchema}
+        onSubmit={(values, { resetForm }) =>
+          createTask({ ...values, userId: user.id }, setTasks, resetForm)
+        }
+      >
+        <Form className="flex flex-col items-center gap-2 mt-4">
+          <Field name="title" placeholder="Title" />
+          <ErrorMessage name="title" component="div" className="text-red-500" />
+
+          <Field name="description" placeholder="Description" />
+          <ErrorMessage
+            name="description"
+            component="div"
+            className="text-red-500"
+          />
+
+          <Field as="select" name="isCompleted">
+            <option value={false}>Incomplete</option>
+            <option value={true}>Completed</option>
+          </Field>
+
+          <button type="submit">Submit</button>
+        </Form>
+      </Formik>
 
       <div className="mt-6">
         <h2 className="text-lg font-semibold">{user?.username}'s Tasks:</h2>
@@ -139,10 +97,10 @@ function Tasks() {
           <ul>
             {tasks.map((task) => (
               <li key={task.id}>
-                <strong>{task.title}</strong> — {task.description}{' '}
-                [{task.isCompleted ? '✅ Completed' : '❌ Incomplete'}]
+                <strong>{task.title}</strong> — {task.description} [
+                {task.isCompleted ? "✅ Completed" : "❌ Incomplete"}]
                 <button
-                  onClick={() => handleDelete(task.id)}
+                  onClick={() => deleteTaskById(task.id, setTasks)}
                   className="p-2 ml-2 text-white bg-red-600"
                 >
                   Delete
@@ -159,32 +117,13 @@ function Tasks() {
         )}
       </div>
 
-      {/* ✅ Edit Modal */}
       {editingTask && (
         <EditTask
           task={editingTask}
           onClose={() => setEditingTask(null)}
-          onUpdate={async (updatedTask) => {
-            const token = localStorage.getItem('token');
-            try {
-              const response = await API.put(
-                `/tasks/${updatedTask.id}`,
-                updatedTask,
-                {
-                  headers: { Authorization: `Bearer ${token}` },
-                }
-              );
-              setTasks((prevTasks) =>
-                prevTasks.map((t) =>
-                  t.id === updatedTask.id ? response.data : t
-                )
-              );
-              setEditingTask(null);
-            } catch (error) {
-              console.error('Failed to update task:', error);
-              alert('Error updating task.');
-            }
-          }}
+          onUpdate={(updatedTask) =>
+            updateTaskById(updatedTask, setTasks, () => setEditingTask(null))
+          }
         />
       )}
     </div>
