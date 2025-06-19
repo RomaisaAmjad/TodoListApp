@@ -11,7 +11,7 @@ import {
   updateTaskById,
 } from "../Functions/taskHandling.js";
 
-// Safe function to parse stored user from localStorage
+
 function getStoredUser() {
   const userData = localStorage.getItem("user");
   if (!userData || userData === "undefined") return null;
