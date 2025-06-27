@@ -28,7 +28,7 @@ exports.signUp = asyncWrapper(async function (req, res) {
   res.status(201).send({ token, user: userData });
 });
 
-exports.LogIn = asyncWrapper(async function (req, res) {
+exports.logIn = asyncWrapper(async function (req, res) {
   const { username, password } = req.body;
   const user = await User.findOne({ where: { username } });
   if (!user) {

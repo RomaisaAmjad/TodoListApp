@@ -7,8 +7,8 @@ const controller = require('../Controllers/AuthController');
 const router = Router(); 
 
 
-router.post('/signup',validateMiddleware(validateUser),controller.signUp);
-router.post('/logIn',controller.LogIn);
+router.post('/signUp',validateMiddleware(validateUser),controller.signUp);
+router.post('/logIn',controller.logIn);
 
 module.exports = router;
 
