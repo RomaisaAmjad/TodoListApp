@@ -60,7 +60,7 @@ function Tasks() {
 
   return (
     <div className="text-center">
-      <h1 className="text-xl font-bold">Hello {user?.username || "User"}</h1>
+      <h1 className="text-xl font-bold">Hello, {user?.username || "User"}!</h1>
 
       <Formik
         initialValues={{ title: "", description: "", isCompleted: false }}
@@ -101,7 +101,7 @@ function Tasks() {
                 {task.isCompleted ? "✅ Completed" : "❌ Incomplete"}]
                 <button
                   onClick={() => deleteTaskById(task.id, setTasks)}
-                  className="p-2 ml-2 text-white bg-red-600"
+                  className="p-2 m-3 text-white bg-red-600 "
                 >
                   Delete
                 </button>

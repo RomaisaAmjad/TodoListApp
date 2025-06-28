@@ -1,11 +1,33 @@
 'use strict';
 
+const bcrypt = require('bcrypt');
+const { use } = require('../routes/user');
+
+const userTableName= "users";
+const taskTableName= "tasks";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.bulkInsert(
-      "tasks",
-      [
+      userTableName,[
+        {
+          username: 'Romaisa',
+          email: 'romaisa123@gmail.com',
+          password: await bcrypt.hash('Romaisa123', 12),
+        },
+        {
+          username: 'Areeba',
+          email: 'areeba456@gmail.com',
+          password: await bcrypt.hash('Areeba', 12),
+        },{
+          username: 'Neha',
+          email: 'neha456@gmail.com',
+          password: await bcrypt.hash('Neha123', 12),
+        }
+      ],{}
+    )
+    await queryInterface.bulkInsert(
+      taskTableName,[
         {
           title: "Complete onboarding",
           description: "Finish setting up profile and preferences.",
@@ -55,12 +77,14 @@ module.exports = {
           userId: 1,
          
         },
-      ],
-      {}
-    );
+      ],{}
+    )
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('tasks', null, {});
+    
+      await queryInterface.bulkDelete(userTableName, null, {});
+      await queryInterface.bulkDelete(taskTableName, null, {});
+    
   }
 };

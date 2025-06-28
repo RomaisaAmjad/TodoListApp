@@ -4,6 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { signupUser } from "../Functions/signupHandling.js";
 import signUpImage from "../assets/signUp.jpg";
+import Navbar from "../components/NavBar.jsx";
 
 const validationSchema = Yup.object({
   username: Yup.string().min(3, "Too short").required("Username is required"),
@@ -17,13 +18,15 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center">
+    <div className="relative">
+      <Navbar />
+    <div className="relative  min-h-screen flex items-center justify-center">
       <div
         className="absolute inset-0 bg-cover bg-center z-0"
         style={{ backgroundImage: `url(${signUpImage})` }}
       ></div>
 
-      <div className="relative z-20 min-h-screen flex items-center justify-center px-5">
+      <div className="relative mt-20 z-20 min-h-screen flex items-center justify-center px-5">
         <Formik
           initialValues={{ username: "", email: "", password: "" }}
           validationSchema={validationSchema}
@@ -35,7 +38,7 @@ const SignUp = () => {
               localStorage.setItem("user", JSON.stringify(user));
               localStorage.setItem("token", token);
 
-              navigate("/tasks", { state: { user } });
+              navigate("/welcome", { state: { user } });
             } catch (error) {
               console.log(error);
               alert("Sign Up failed. Try Again!");
@@ -47,7 +50,7 @@ const SignUp = () => {
           {({ isSubmitting }) => (
             <Form
               autoComplete="off"
-              className="md:w-[500px] w-[350px] bg-white/10 backdrop-blur-lg p-12 rounded-xl border border-white/20 shadow-xl space-y-6"
+              className="md:w-[500px] w-[350px] bg-white/20 backdrop-blur-lg p-12 rounded-xl border border-white/20 shadow-xl space-y-6"
             >
               <h2 className="text-2xl font-bold text-center text-white">
                 Sign Up
@@ -119,7 +122,7 @@ const SignUp = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-amber-600 text-white font-semibold py-2 px-4 rounded hover:bg-amber-700 transition hover:cursor-pointer"
+                className="w-full bg-red-900 text-white font-semibold py-2 px-4 rounded hover:bg-red-800 transition hover:cursor-pointer"
               >
                 {isSubmitting ? "Signing up..." : "Sign Up"}
               </button>
@@ -127,6 +130,7 @@ const SignUp = () => {
           )}
         </Formik>
       </div>
+    </div>
     </div>
   );
 };
