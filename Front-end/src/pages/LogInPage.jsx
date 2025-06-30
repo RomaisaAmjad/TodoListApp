@@ -4,7 +4,8 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import logInImage from "../assets/logIn.jpg";
 import { loginUser } from "../Functions/loginHandling";
-import Navbar from "../components/NavBar";
+import Navbar from "../components/Navbar";
+import Footer from '../components/Footer'
 
 const validationSchema = Yup.object({
   username: Yup.string().min(3, "Too short").required("Username is required"),
@@ -17,7 +18,7 @@ const LogIn = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="relative">
+    <div className="relative min-h-screen">
       <Navbar/>
 
     <div className="relative min-h-screen flex items-center justify-center">
@@ -104,6 +105,7 @@ const LogIn = () => {
         </Formik>
       </div>
     </div>
+    <Footer/>
     </div>
   );
 };

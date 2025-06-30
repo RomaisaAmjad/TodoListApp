@@ -1,8 +1,9 @@
 import React from 'react';
-import HeroImage from '../assets/HeroSection.jpg';
+import HeroImage from '../assets/heroSection.jpg';
 import TypingEffect from '../components/TypingEffect';
 import HeroNavBar from '../components/HeroNavBar'
 import {Link} from 'react-router-dom';
+import Footer from '../components/Footer.jsx'
 
 function HeroSection() {
   return (
@@ -35,6 +36,7 @@ function HeroSection() {
         </div>
       </div>
     </div>
+    <Footer/>
     </div>
     </>
   );

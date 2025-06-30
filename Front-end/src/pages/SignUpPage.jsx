@@ -4,7 +4,8 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { signupUser } from "../Functions/signupHandling.js";
 import signUpImage from "../assets/signUp.jpg";
-import Navbar from "../components/NavBar.jsx";
+import Navbar from "../components/Navbar.jsx";
+import Footer from "../components/Footer.jsx"
 
 const validationSchema = Yup.object({
   username: Yup.string().min(3, "Too short").required("Username is required"),
@@ -131,6 +132,7 @@ const SignUp = () => {
         </Formik>
       </div>
     </div>
+    <Footer/>
     </div>
   );
 };
