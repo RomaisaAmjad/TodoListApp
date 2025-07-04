@@ -24,16 +24,16 @@ function EditTask({ task, onClose, onUpdate }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-[rgba(0,0,0,0.7)] backdrop-blur-sm flex items-center justify-center z-30">
-      <div className="bg-white p-6 rounded-lg w-11/12 md:w-2/3 lg:w-1/2 shadow-lg">
-        <h2 className="text-xl font-bold text-center mb-4">Edit Task</h2>
+    <div className="fixed mt-10 inset-0 bg-[rgba(0,0,0,0.7)] backdrop-blur-sm flex items-center justify-center z-30">
+      <div className="bg-white p-6 rounded-lg w-11/12 md:w-2/3 lg:w-1/2 shadow-lg border-red-900 border-3">
+        <h2 className="text-xl font-bold text-center text-red-900 mb-4">Edit Task</h2>
 
         <div className="space-y-4">
           <div>
             <label className="block font-semibold">Title</label>
             <input
               type="text"
-              className="w-full p-2 bg-amber-50 rounded focus:outline-none"
+              className="w-full p-2 bg-amber-50 rounded focus:outline"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
@@ -43,14 +43,14 @@ function EditTask({ task, onClose, onUpdate }) {
             <label className="block font-semibold">Description</label>
             <input
               type="text"
-              className="w-full p-2 bg-amber-50 rounded focus:outline-none"
+              className="w-full p-2 bg-amber-50 rounded focus:outline"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>
 
           <div>
-            <label className="block font-semibold">Status</label>
+            <label className="block font-semibold ">Status</label>
             <select
               className="w-full p-2 bg-amber-50 rounded"
               value={isCompleted}
@@ -65,13 +65,13 @@ function EditTask({ task, onClose, onUpdate }) {
         <div className="flex justify-end mt-6 gap-4">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+            className="px-4 py-2 bg-black text-white rounded hover:cursor-pointer"
           >
             Cancel
           </button>
           <button
             onClick={handleUpdateClick}
-            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+            className="px-4 py-2 bg-amber-700 text-white rounded hover:cursor-pointer"
           >
             Update Task
           </button>

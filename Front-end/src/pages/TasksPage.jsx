@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import EditTask from "../components/EditTask.jsx";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import NavBar from "../components/Navbar.jsx";
+import Footer from "../components/Footer.jsx";
 
 import {
   fetchTasksFromAPI,
@@ -59,8 +61,14 @@ function Tasks() {
   if (checkingAuth) return <div className="text-center">Loading...</div>;
 
   return (
-    <div className="text-center">
-      <h1 className="text-xl font-bold">Hello, {user?.username || "User"}!</h1>
+
+    <div className="relative bg-red-100">
+        <div className="fixed top-0 left-0 w-full z-50">
+         <NavBar />
+  </div>
+    <div className="text-center min-h-screen bg-red-100">
+      <div className="mt-20">
+      <h1 className="text-xl font-bold p-3 bg-red-900 text-white">{user?.username || "User"}'s Task dashboard</h1>
 
       <Formik
         initialValues={{ title: "", description: "", isCompleted: false }}
@@ -69,48 +77,55 @@ function Tasks() {
           createTask({ ...values, userId: user.id }, setTasks, resetForm)
         }
       >
-        <Form className="flex flex-col items-center gap-2 mt-4">
-          <Field name="title" placeholder="Title" />
-          <ErrorMessage name="title" component="div" className="text-red-500" />
+        <Form className="flex flex-col gap-3 mt-6 border-2 border-red-900 p-6 rounded-md bg-white mx-auto w-full max-w-md shadow-md">
+          <Field className="p-2 border-1 border-grey-800 rounded-md"  name="title" placeholder="Title" />
+          <ErrorMessage name="title" component="div" className="text-red-800 text-left text-sm" />
 
-          <Field name="description" placeholder="Description" />
+          <Field className="p-2 border-1 border-grey-800 rounded-md" name="description" placeholder="Description" />
           <ErrorMessage
             name="description"
             component="div"
-            className="text-red-500"
+            className="text-red-800 text-left text-sm"
           />
 
-          <Field as="select" name="isCompleted">
+          <Field as="select" name="isCompleted" className="p-2 border-1 border-grey-800 rounded-md">
             <option value={false}>Incomplete</option>
             <option value={true}>Completed</option>
           </Field>
 
-          <button type="submit">Submit</button>
+          <button className="bg-red-800 text-white p-2 rounded-md hover:cursor-pointer hover:bg-red-900" type="submit">Submit</button>
         </Form>
       </Formik>
+      </div>
 
       <div className="mt-6">
-        <h2 className="text-lg font-semibold">{user?.username}'s Tasks:</h2>
         {tasks.length === 0 ? (
-          <p>No tasks found.</p>
+          <p className="  text-red-800 text-center text-sm font-bold mb-7">No tasks found. Add a task to get started!</p>
         ) : (
-          <ul>
+          <ul className="flex flex-col gap-3 shadow-2 shadow-red-900 m-3 text-justify  md:text-justify p-3 bg-white rounded-md shadow-md mb-10 " >
             {tasks.map((task) => (
+              
               <li key={task.id}>
-                <strong>{task.title}</strong> — {task.description} [
-                {task.isCompleted ? "✅ Completed" : "❌ Incomplete"}]
+                <div className="flex flex-col md:flex-row md:justify-between gap-3 p-3 border-b  border-red-200">
+                <div>
+                <strong>{task.title}</strong> — {task.description} 
+                {task.isCompleted ? " ✅ " : " ❌ "}
+                </div>
+                <div>
                 <button
                   onClick={() => deleteTaskById(task.id, setTasks)}
-                  className="p-2 m-3 text-white bg-red-600 "
+                  className="p-2 px-4 m-3 text-white bg-red-700 rounded-md hover:cursor-pointer hover:bg-red-800"
                 >
                   Delete
                 </button>
                 <button
                   onClick={() => setEditingTask(task)}
-                  className="p-2 ml-2 text-white bg-blue-600"
+                  className="p-2 px-6 ml-2 text-white bg-amber-600 rounded-md hover:cursor-pointer hover:bg-amber-700"
                 >
                   Edit
                 </button>
+                </div>
+                </div>
               </li>
             ))}
           </ul>
@@ -126,6 +141,11 @@ function Tasks() {
           }
         />
       )}
+      <div className="p-6">
+      <Link to='/' className="bg-red-800 p-4 rounded-md px-6 font-bold text-white hover:cursor-pointer hover:bg-red-900">Log Out</Link>
+      </div>
+    </div>
+    <Footer/>
     </div>
   );
 }
