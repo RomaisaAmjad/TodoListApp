@@ -1,7 +1,7 @@
 import API from "../api/axios.js";
 export async function signupUser(values) {
     try {
-      const response = await API.post("/api/users/signup", values);
+      const response = await API.post("/api/users/signUp", values);
       const { token, user } = response.data;
   
       localStorage.setItem("token", token);
