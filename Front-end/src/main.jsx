@@ -8,6 +8,7 @@ import SignUp from './pages/SignUpPage.jsx';
 import App from './App.jsx';
 import WelcomeUser from './pages/WelcomeUserPage.jsx';
 import Tasks from './pages/TasksPage.jsx';
+import PageNotFound from './pages/NotFoundPage.jsx';
 import './index.css';
 
 const router = createBrowserRouter([
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   },{
     path:'/tasks',
     element:<Tasks/>
+  },
+  {
+    path:'*',
+    element:<PageNotFound/>
   }
 ]);
 
