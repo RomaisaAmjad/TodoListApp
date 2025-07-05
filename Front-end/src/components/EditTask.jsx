@@ -13,7 +13,7 @@ function EditTask({ task, onClose, onUpdate }) {
 
   const handleUpdateClick = () => {
     const updatedTask = {
-      ...task,
+      id: task.id,
       title,
       description,
       isCompleted,
