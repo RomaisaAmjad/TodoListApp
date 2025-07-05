@@ -11,7 +11,7 @@ import {
   createTask,
   deleteTaskById,
   updateTaskById,
-} from "../Functions/taskHandling.js";
+} from "../services/taskHandling.js";
 
 
 function getStoredUser() {
