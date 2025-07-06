@@ -9,7 +9,7 @@ export async function signupUser(values) {
   
       console.log("User registered:", user);
       
-      return { user, token };
+      return  user;
     } catch (error) {
       console.error("Sign Up error:", error);
       throw error; 

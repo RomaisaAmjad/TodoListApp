@@ -1,7 +1,6 @@
 'use strict';
 
 const bcrypt = require('bcrypt');
-const { use } = require('../routes/user');
 
 const userTableName= "users";
 const taskTableName= "tasks";

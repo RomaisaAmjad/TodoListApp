@@ -36,8 +36,7 @@ const SignUp = () => {
               const { user, token } = await signupUser(values);
               console.log("Form submitted values:", values);
 
-              localStorage.setItem("user", JSON.stringify(user));
-              localStorage.setItem("token", token);
+              
 
               navigate("/welcome", { state: { user } });
             } catch (error) {
