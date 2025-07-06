@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import logInImage from "../assets/logIn.jpg";
-import { loginUser } from "../services/loginHandling";
+import { loginUser } from "../services/loginHandling.services";
 import Navbar from "../components/Navbar";
 import Footer from '../components/Footer'
 

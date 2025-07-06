@@ -1,5 +1,5 @@
 const { Task } = require("../models/index.js");
-const { asyncWrapper } = require("../Middlewares/asyncWrapper.js");
+const { asyncWrapper } = require("../middlewares/asyncWrapper.middleware.js");
 
 exports.getAllTasks = asyncWrapper(async (req, res) => {
   const tasks = await Task.findAll({ where: { userId: req.userId } });

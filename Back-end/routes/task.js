@@ -1,9 +1,9 @@
 const { Router } = require('express');
-const { validateMiddleware } = require('../Middlewares/validateMiddleware');
-const {validateTaskPost, validateTaskPut} = require('../validators/taskValidator');
-const { authenticateUser } = require('../Middlewares/authMiddleware');
-const {accessControl} = require('../Middlewares/accessControl');
-const controller = require('../Controllers/TodoTask');
+const { validateMiddleware } = require('../middlewares/validate.middleware');
+const {validateTaskPost, validateTaskPut} = require('../validators/task.validator');
+const { authenticateUser } = require('../middlewares/auth.middleware');
+const {accessControl} = require('../middlewares/accessControl.middleware');
+const controller = require('../controllers/task.controller');
 
 const router = Router();
 

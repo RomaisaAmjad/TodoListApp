@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { signupUser } from "../services/signupHandling.js";
+import { signupUser } from "../services/signupHandling.services.js";
 import signUpImage from "../assets/signUp.jpg";
 import Navbar from "../components/Navbar.jsx";
 import Footer from "../components/Footer.jsx"

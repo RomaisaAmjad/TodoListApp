@@ -1,5 +1,5 @@
 const { User, Task } = require("../models/index.js");
-const { asyncWrapper } = require("../Middlewares/asyncWrapper.js");
+const { asyncWrapper } = require("../middlewares/asyncWrapper.middleware.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 

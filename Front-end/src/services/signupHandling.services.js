@@ -1,4 +1,4 @@
-import API from "../api/axios.js";
+import API from "../configs/axios.js";
 export async function signupUser(values) {
     try {
       const response = await API.post("/api/users/signUp", values);

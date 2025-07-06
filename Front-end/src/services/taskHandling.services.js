@@ -1,4 +1,4 @@
-import API from "../api/axios.js";
+import API from "../configs/axios.js";
 
 export function getUserFromStorage(location) {
   try {

@@ -5,7 +5,7 @@ import HeroNavBar from '../components/HeroNavBar'
 import {Link} from 'react-router-dom';
 import Footer from '../components/Footer.jsx'
 
-function HeroSection() {
+function FrontPage() {
   return (
     <>
     <div className='relative'>
@@ -42,4 +42,4 @@ function HeroSection() {
   );
 }
 
-export default HeroSection;
+export default FrontPage;
