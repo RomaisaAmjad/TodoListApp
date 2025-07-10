@@ -1,11 +1,11 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { signupUser } from "../services/signupHandling.services.js";
-import signUpImage from "../assets/signUp.jpg";
-import Navbar from "../components/Navbar.jsx";
-import Footer from "../components/Footer.jsx"
+import signUpImage from "../assets/BackgroundImage.jpg";
+import TodoIcon from "../assets/TodoIcon.png"
+
 
 const validationSchema = Yup.object({
   username: Yup.string().min(3, "Too short").required("Username is required"),
@@ -20,14 +20,14 @@ const SignUp = () => {
 
   return (
     <div className="relative">
-      <Navbar />
-    <div className="relative  min-h-screen flex items-center justify-center">
+    <div className="relative  min-h-screen  justify-center">
       <div
         className="absolute inset-0 bg-cover bg-center z-0"
         style={{ backgroundImage: `url(${signUpImage})` }}
       ></div>
+          <div className="absolute inset-0 bg-black opacity-50 z-13 "></div>
 
-      <div className="relative mt-20 z-20 min-h-screen flex items-center justify-center px-5">
+      <div className="relative m-auto z-20 min-h-screen flex items-center text-center justify-center">
         <Formik
           initialValues={{ username: "", email: "", password: "" }}
           validationSchema={validationSchema}
@@ -35,9 +35,6 @@ const SignUp = () => {
             try {
               const { user, token } = await signupUser(values);
               console.log("Form submitted values:", values);
-
-              
-
               navigate("/welcome", { state: { user } });
             } catch (error) {
               console.log(error);
@@ -50,16 +47,18 @@ const SignUp = () => {
           {({ isSubmitting }) => (
             <Form
               autoComplete="off"
-              className="md:w-[500px] w-[350px] bg-white/20 backdrop-blur-lg p-12 rounded-xl border border-white/20 shadow-xl space-y-6"
+              className="md:w-[400px] w-[350px] text-sm p-5 rounded-xl border border-white/20 shadow-xl rounded-2xl space-y-6"
             >
-              <h2 className="text-2xl font-bold text-center text-white">
+               <img src={TodoIcon} alt="TodoIcon" className="w-10 h-10 m-auto" />
+              <h2 className="text-2xl text-white">
                 Sign Up
               </h2>
+              <h3 className="text-white">Already have an account? <Link to="/login" className="hover:border-b" >Log in</Link></h3>
 
-              <div>
+              <div className="text-left">
                 <label
                   htmlFor="username"
-                  className="block text-sm font-medium text-white"
+                  className="block text-sm font-medium text-white ml-12"
                 >
                   Username
                 </label>
@@ -68,19 +67,19 @@ const SignUp = () => {
                   type="text"
                   name="username"
                   id="username"
-                  className="mt-1 block w-full border border-gray-300 rounded px-3 py-2 focus:outline-none bg-white/80"
+                  className="mt-1 block w-3/4 m-auto border border-gray-300 rounded-2xl px-3 py-2 focus:outline-none bg-white/80"
                 />
                 <ErrorMessage
                   name="username"
                   component="div"
-                  className="text-white p-2 bg-red-600 text-sm"
+                  className="text-white text-sm"
                 />
               </div>
 
-              <div>
+              <div className="text-left" >
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-white"
+                  className="block text-sm font-medium text-white ml-12"
                 >
                   Email
                 </label>
@@ -89,19 +88,19 @@ const SignUp = () => {
                   name="email"
                   id="email"
                   placeholder="JhonDoe@gmail.com"
-                  className="mt-1 block w-full border border-gray-300 rounded px-3 py-2 focus:outline-none bg-white/80"
+                  className="mt-1 block w-3/4 m-auto border border-gray-300 rounded-2xl px-3 py-2 focus:outline-none bg-white/80"
                 />
                 <ErrorMessage
                   name="email"
                   component="div"
-                  className="text-white p-2 bg-red-600 text-sm"
+                  className="text-white text-sm"
                 />
               </div>
 
-              <div>
+              <div className="text-left">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium text-white"
+                  className="block text-sm font-medium text-white ml-12"
                 >
                   Password
                 </label>
@@ -110,19 +109,19 @@ const SignUp = () => {
                   type="password"
                   name="password"
                   id="password"
-                  className="mt-1 block w-full border border-gray-300 rounded px-3 py-2 focus:outline-none bg-white/80"
+                  className="mt-1 block w-3/4 m-auto border border-gray-300 rounded-2xl px-3 py-2 focus:outline-none bg-white/80"
                 />
                 <ErrorMessage
                   name="password"
                   component="div"
-                  className="text-white p-2 bg-red-600 text-sm"
+                  className="text-white text-sm"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-red-900 text-white font-semibold py-2 px-4 rounded hover:bg-red-800 transition hover:cursor-pointer"
+                className="w-3/4 m-auto mt-2 bg-gray-500 text-white font-semibold py-2 px-4 rounded-2xl hover:bg-gray-600 transition hover:cursor-pointer"
               >
                 {isSubmitting ? "Signing up..." : "Sign Up"}
               </button>
@@ -131,7 +130,6 @@ const SignUp = () => {
         </Formik>
       </div>
     </div>
-    <Footer/>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import EditTask from "../components/EditTask.jsx";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import NavBar from "../components/Navbar.jsx";
-import Footer from "../components/Footer.jsx";
+
 
 import {
   fetchTasksFromAPI,
@@ -145,7 +145,7 @@ function Tasks() {
       <Link to='/' className="bg-red-800 p-4 rounded-md px-6 font-bold text-white hover:cursor-pointer hover:bg-red-900">Log Out</Link>
       </div>
     </div>
-    <Footer/>
+  
     </div>
   );
 }
