@@ -95,7 +95,7 @@ function Tasks() {
               <Field
                 as="select"
                 name="isCompleted"
-                className="p-1 px-2 text-sm rounded-2xl bg-green-100 text-gray-900"
+                className="p-1 px-2 text-sm rounded-2xl bg-blue-100 text-gray-900"
               >
                 <option value={false}>Processing</option>
                 <option value={true}>Completed</option>
@@ -114,7 +114,7 @@ function Tasks() {
         <div className="m-3 flex flex-row justify-center items-center gap-2" >
           <p className="font-bold text-white ">Filter By : </p>
           <select
-            className="p-1 px-2 rounded-xl text-xs bg-green-100 text-gray-900"
+            className="p-1 px-2 rounded-xl text-xs bg-blue-100 text-gray-900"
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
           >
@@ -128,7 +128,7 @@ function Tasks() {
 
         <div className="mt-4">
           {filteredTasks.length === 0 ? (
-            <p className="text-white text-center text-sm font-bold mb-7">
+            <p className="text-white text-center mt-30 font-bold mb-7">
               No tasks found!
             </p>
           ) : (
