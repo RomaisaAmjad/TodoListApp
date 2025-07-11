@@ -1,5 +1,5 @@
 // Functions/loginHandling.js
-import API from "../api/axios";
+import API from "../configs/axios";
 
 export async function loginUser(values) {
   try {

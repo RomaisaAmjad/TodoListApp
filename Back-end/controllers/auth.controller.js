@@ -1,11 +1,10 @@
 const { User, Task } = require("../models/index.js");
-const { asyncWrapper } = require("../Middlewares/AsyncWrapper");
+const { asyncWrapper } = require("../middlewares/asyncWrapper.middleware.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 exports.signUp = asyncWrapper(async function (req, res) {
   const { username, email, password } = req.body;
-
   const salt = await bcrypt.genSalt(12);
   const hashedPassword = await bcrypt.hash(password, salt);
 

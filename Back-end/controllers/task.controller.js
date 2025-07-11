@@ -1,5 +1,5 @@
 const { Task } = require("../models/index.js");
-const { asyncWrapper } = require("../Middlewares/AsyncWrapper");
+const { asyncWrapper } = require("../middlewares/asyncWrapper.middleware.js");
 
 exports.getAllTasks = asyncWrapper(async (req, res) => {
   const tasks = await Task.findAll({ where: { userId: req.userId } });
@@ -16,11 +16,6 @@ exports.createTask = asyncWrapper(async (req, res) => {
 exports.updateTask = asyncWrapper(async (req, res) => {
   const { id } = req.params;
   const task = await Task.findByPk(id);
-
-  if (!task || task.userId !== req.userId) {
-    return res.status(403).send("Unauthorized or Task not found.");
-  }
-
   await task.update(req.body);
   res.status(200).send(task);
 });
@@ -28,11 +23,6 @@ exports.updateTask = asyncWrapper(async (req, res) => {
 exports.deleteTask = asyncWrapper(async (req, res) => {
   const { id } = req.params;
   const task = await Task.findByPk(id);
-
-  if (!task || task.userId !== req.userId) {
-    return res.status(403).send("Unauthorized or Task not found.");
-  }
-
   await task.destroy();
   res.status(200).send("Task deleted successfully!");
 });

@@ -1,11 +1,11 @@
 import './App.css'
-import HeroSection from './pages/HeroSectionPage'
+import LogInPage from './pages/LogInPage'
 
 function App() {
   
   return (
     <>
-     <HeroSection/>
+     <LogInPage/>
     </>
   )
 }
