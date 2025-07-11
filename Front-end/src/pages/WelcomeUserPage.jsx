@@ -13,14 +13,13 @@ const WelcomeUser = () => {
       <ProfileNavBar />
 
       <div
-        className="min-h-screen bg-cover bg-center flex items-center justify-center text-white bg-gray-700" 
+        className="min-h-screen bg-cover bg-center flex items-center justify-center text-white bg-gray-900" 
       >
         <div className="w-11/12 md:w-2/3 lg:w-1/2 bg-gray-300 p-6  shadow-md shadow-gray-900 text-center mt-10 flex flex-col md:flex-row items-center justify-between gap-6">
           
       
           <div className="w-full md:w-1/2 flex justify-center">
 
-          {/* <FaUser className='w-1/2 md:w-2/3 h-1/2 md:h-2/3 text-gray-900'></FaUser> */}
           
             <img src={UserProfile} alt="NotePad" className="w-1/2 md:w-2/3" />
           </div>
