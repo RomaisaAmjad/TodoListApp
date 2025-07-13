@@ -74,7 +74,7 @@ const LogIn = () => {
                 <ErrorMessage
                   name="username"
                   component="div"
-                  className="text-white text-sm"
+                  className="text-white text-sm ml-12"
                 />
               </div>
 
@@ -95,7 +95,7 @@ const LogIn = () => {
                 <ErrorMessage
                   name="password"
                   component="div"
-                  className="text-white text-sm"
+                  className="text-white text-sm ml-12"
                 />
               </div>
 
